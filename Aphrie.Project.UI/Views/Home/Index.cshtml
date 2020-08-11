@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Aphrie.Project.UI.Models.Account>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+@{
+    ViewBag.Title = "Home";
+   
+}
+<h3>
+    <strong> People to follow </strong>
+</h3>
+<hr />
+<div class="wrap">
+    <div class="right-content">
+        @foreach (var item in Model)
+        {
+            <div class="content-grids">
+                <div class="content-grid">
+                    <a href="singlepage.html">
+                    @*<img src="images/gridallbum1.png" title="allbum-name" />*@
+                    <img src="~/images/figer.jpg" style="width:300px;height:300px" />
+                    </a>
+                    <h3>@item.Name</h3>
+
+                    <div class="comments">
+                        <ul>
+                            <li><a href="#"><img src="/images/views.png" title="view" /></a></li>
+                            <li><a href="#"><img src="/images/likes.png" title="likes" /></a></li>
+                            <li><a href="#"><img src="/images/link.png" title="link" /></a></li>
+                            @if (item.AddOrRemove)
+                            {
+                                <li>
+                                    @Html.ActionLink("remove Friend Req", "RemoveFriendReq", new { Id = item.Id }, new { @class = "readmore" })
+                                </li>
+                            }
+                            @if (!item.AddOrRemove)                           
+                            {
+                            <li>
+                                @Html.ActionLink("Send Friend Req", "SendFriendReq", new { Id = item.Id }, new { @class = "readmore" })
+                            </li>
+                            }
+
+                        </ul>
+                    </div>
+                    <hr />
+                </div>
+            </div>
+        }
+
+    </div>
+</div>

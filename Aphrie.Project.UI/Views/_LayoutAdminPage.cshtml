@@ -1,0 +1,204 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title> @ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/DatePicker")
+    @Styles.Render("~/Content/bootstrap2_toggel")
+    <!------ Include the above in your HEAD tag ---------->
+
+    <style>
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @*@Html.ActionLink("Super Market", "List", "Product", new { area = "" }, new { @class = "navbar-brand" })*@
+
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+
+                        @*<li>@Html.Action("Summary", "Cart")</li>
+                        <li>
+                            @Html.ActionLink("Admin", "index", "Product", new { @class = "magin-left-10" })
+                        </li>*@
+                    </ul>
+                    <div class="visible-xs">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class=" body-content">
+
+        <div class="row">
+            <div class="col-lg-2 col-xs-2 margin-left_-20px">
+                <div class="nav-side-menu margin-left-5 margin-top-51">
+                    <div class="brand margin-left_-113">
+                        <img src="~/Images/shopping-supermarket.PNG" />
+                    </div>
+                    <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+
+                    <div class="menu-list">
+
+                        <ul id="menu-content" class="menu-content collapse out">
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-dashboard fa-lg"></i> Dashboard
+                                </a>
+                            </li>
+
+                            <li data-toggle="collapse" data-target="#products" class="collapsed active">
+                                <a href="#"><i class="fa fa-gift fa-lg"></i> UI Elements <span class="arrow"></span></a>
+                            </li>
+                            @*<ul class="sub-menu collapse" id="products">
+                                <li>
+                                    @Html.ActionLink("Product", "Index", "Product", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "droplist-item transtion" })
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Categories", "Index", "Categories", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "droplist-item transtion" })
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Payment Methods", "Index", "PaymentMethods", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "droplist-item transtion" })
+                                </li>
+                                <li style="background: none;">
+                                    @Html.ActionLink("App Users", "Index", "AppUsers", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "droplist-item transtion" })
+                                </li>
+                                <li style="background: none;">
+                                    @Html.ActionLink("Role", "Index", "Role", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "droplist-item transtion" })
+                                </li>
+                                <li style="background: none;">
+                                    @Html.ActionLink("Suppliers", "Index", "Suppliers", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "droplist-item transtion" })
+                                </li>
+                                <li style="background: none;">
+                                    @Html.ActionLink("Operation Types", "Index", "OperationTypes", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "droplist-item transtion" })
+                                </li>
+                            </ul>*@
+
+
+                            <li data-toggle="collapse" data-target="#service" class="collapsed">
+                                <a href="#"><i class="fa fa-globe fa-lg"></i> Services <span class="arrow"></span></a>
+                            </li>
+                            <ul class="sub-menu collapse" id="service">
+                                <li>@Html.ActionLink("Bills", "Index", "Bills", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "droplist-item transtion" })</li>
+                                <li>@Html.ActionLink("Operations", "Index", "Operations", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "droplist-item transtion" })</li>
+                                <li>New Service 3</li>
+                            </ul>
+
+
+                            <li data-toggle="collapse" data-target="#new" class="collapsed">
+                                <a href="#"><i class="fa fa-car fa-lg"></i> New <span class="arrow"></span></a>
+                            </li>
+                            <ul class="sub-menu collapse" id="new">
+                                <li>New New 1</li>
+                                <li>New New 2</li>
+                                <li>New New 3</li>
+                            </ul>
+
+
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-user fa-lg"></i> Profile
+                                </a>
+                            </li>
+
+                            <li class="margin-bottom-80">
+                                <a href="#">
+                                    <i class="fa fa-users fa-lg"></i> Users
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-offset-1 col-xs-9 col-sm-9 margin-top-39 margin-left-332">
+
+                @if (TempData["message"] != null)
+                {
+                    <div class="alert alert-success">@TempData["message"]</div>
+                }
+                <br />
+                <div class="row">
+
+                    <div class="margin-left_-20px margin-top_-20px">
+                        @RenderBody()
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <hr class="margin-top-20prs " />
+    <footer class="container">
+        <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+    </footer>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/jqueryValidate")
+    @Scripts.Render("~/Scripts/DatePicker")
+    @Scripts.Render("~/bundles/bootstrap2_toggel")
+</body>
+
+
+</html>
+
+
+
+<script>
+
+    $(function () {
+        $('#side-menu').metisMenu();
+    });
+
+    $(function () {
+        $(window).bind("load resize", function () {
+            var topOffset = 50;
+            var width = (this.window.innerWidth > 0) ? this.window.innerWidth : this.screen.width;
+            if (width < 768) {
+                $('div.navbar-collapse').addClass('collapse');
+                topOffset = 100; // 2-row-menu
+            } else {
+                $('div.navbar-collapse').removeClass('collapse');
+            }
+
+            var height = ((this.window.innerHeight > 0) ? this.window.innerHeight : this.screen.height) - 1;
+            height = height - topOffset;
+            if (height < 1) height = 1;
+            if (height > topOffset) {
+                $("#page-wrapper").css("min-height", (height) + "px");
+            }
+        });
+
+        var url = window.location;
+        var element = $('ul.nav a').filter(function () {
+            return this.href == url;
+        }).addClass('active').parent();
+        while (true) {
+            if (element.is('li')) {
+                element = element.parent().addClass('in').parent();
+            } else {
+                break;
+            }
+        }
+    });
+
+</script>

@@ -1,0 +1,45 @@
+﻿<div class="well">
+    @*@if (Model.ImageData != null)
+        {
+            <div class="pull-left" style="margin-right: 10px">
+                <img class="img-thumbnail" width="75" height="75" src="@Url.Action("GetImage", "Product",new { Model.ProductID })" />
+            </div>
+        }*@
+    <h3>
+        <strong>@Model.createBy </strong>
+
+        <span class="pull-right label label-primary">
+           @* @Model.SellingPrice.ToString("c")*@
+        </span>
+    </h3>
+    @*@if (Model.Quentity > 0)
+    {
+        using (Html.BeginForm("AddToCart", "Cart"))
+        {<div class="pull-right">
+                @Html.HiddenFor(x => x.Id)
+                @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                <input type="submit" class="btn btn-success" value="Add to cart" />
+            </div>}
+        <span class="lead"> @Model.MadeInCountry</span>
+        <h5>
+            Quentity    @Model.Quentity
+
+        </h5>
+    }*@
+    @*else
+    {*@
+        @*using (Html.BeginForm("AddToCart", "Cart"))
+        {<div class="pull-right">
+                @Html.HiddenFor(x => x.Id)
+                @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                <input type="submit" class="btn btn-success tooltipp btn btn-primary" disabled value="Add to cart" />
+            </div>}*@
+        @*<span class="lead"> @Model.MadeInCountry</span>
+        <h5>
+            Quentity : <span class="text-danger">  @Model.Quentity </span> not aviliable now
+
+        </h5>*@
+    @*}*@
+
+
+</div>
