@@ -1,4 +1,5 @@
 ﻿using Aphrie.Project.Bll.Concert;
+using Aphrie.Project.DAL.SQLServer.Context;
 using Aphrie.Project.DAL.SQLServer.model;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,13 @@ using System.Threading.Tasks;
 
 namespace Aphrie.project.BLL.Mangers
 {
-    public class AddFriendManger:Repository<AddFriend>
+    public class AddFriendManger : Repository<AddFriend>
     {
+      
+        public AddFriendManger(AphrieContext aphrieContext)
+            :base(aphrieContext)
+        {
+            
+        }
     }
 }

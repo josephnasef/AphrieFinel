@@ -16,17 +16,15 @@ namespace Aphrie.Project.UI.Controllers
     public class AccountController : Controller
     {
 
-        private readonly postManger postManger;
         private readonly Authentication authentication;
-        private readonly UserManger userManger;
-        private readonly AddFriendManger addFriendManger;
-        public AccountController(postManger _postManger, Authentication _authentication, UserManger _userManger, AddFriendManger _addFriendManger)
+        private readonly UnitOfWork unitOfWork;
+        public AccountController(UnitOfWork _unitOfWork, Authentication _authentication)
         {
 
-            this.postManger = _postManger;
             this.authentication = _authentication;
-            this.userManger = _userManger;
-            this.addFriendManger = _addFriendManger;
+            this.unitOfWork = _unitOfWork;
+
+           
         }
         // GET: Account
         [AllowAnonymous]
@@ -69,13 +67,14 @@ namespace Aphrie.Project.UI.Controllers
         [HttpPost]
         public ActionResult Register(RegesterViewModel regesterView)
         {   
+
             Users user = new Users()
             {
                 Password = regesterView.Password,
                 Username = regesterView.Username,
                 Phone = regesterView.Phone
             };
-            userManger.Add(user);
+            unitOfWork.UserManger.Add(user);
             return RedirectToAction("Index","Home");
         }
 
@@ -105,10 +104,10 @@ namespace Aphrie.Project.UI.Controllers
                 //Photo = postViewModel.PhotoUrl,
                 creatby = HttpContext.User.Identity.Name,
                 creatdate = DateTime.Now,
-                Users_Id = userManger.GetId()
+                Users_Id = unitOfWork.UserManger.GetId()
             };
 
-            postManger.Add(MyPost);
+            unitOfWork.postManger.Add(MyPost);
 
             return RedirectToAction("Index", "Home");
         }
@@ -116,28 +115,22 @@ namespace Aphrie.Project.UI.Controllers
         [Authorize]
         public ActionResult PostList()
         {
-            int Id = userManger.GetAllBind().SingleOrDefault(u => u.Username == HttpContext.User.Identity.Name).Id;
-            List<AddFriend> list = addFriendManger.GetAll().Where(u => u.SenderId == Id).ToList();
+            int Id = unitOfWork.UserManger.GetAllBind().SingleOrDefault(u => u.Username == HttpContext.User.Identity.Name).Id;
+            List<AddFriend> list = unitOfWork.AddFriendManger.GetAll().Where(u => u.SenderId == Id).ToList();
             List<Post> Mylist = new List<Post>();
             foreach (var item in list)
             {
-               Mylist.AddRange(postManger.GetAllBind().Where(u => u.Isarchived == false && u.Users_Id == item.ReceiverId).ToList());
+               Mylist.AddRange(unitOfWork.postManger.GetAllBind().Where(u => u.Isarchived == false && u.Users_Id == item.ReceiverId).ToList());
             };
-            List<PostViewModel> MyPostViewModel = new List<PostViewModel>();
-            PostViewModel mypost;
-            int i = 0;
-            foreach (var item in Mylist)
-            {
-                ViewBag.Id = item.Id;
-                mypost = new PostViewModel();
-                mypost.Id = item.Id;
-                mypost.Content = item.content;
-                mypost.Image = item.Image;
-                mypost.createBy = item.creatby;
-                MyPostViewModel.Insert(i++, mypost);
-                var image = item.Image;
-            }
-
+            //List<PostViewModel> MyPostViewModel = new List<PostViewModel>();
+            List<PostViewModel> MyPostViewModel = Mylist.Select(u => new PostViewModel {
+                Id = u.Id, 
+                Content = u.content,
+                createBy = u.creatby,
+                CreatedDate = u.creatdate,
+                Image = u.Image,
+                Isarchived = u.Isarchived 
+            }).ToList();
             return View(MyPostViewModel);
         }
 
@@ -145,29 +138,24 @@ namespace Aphrie.Project.UI.Controllers
         public ActionResult PersonalPage()
         {
 
-            int myUserId = userManger.GetId();
-            List<Post> MylistOfPosts = postManger.GetAll().Where(u => u.Users_Id == myUserId).ToList();
-            List<PostViewModel> MypostListViewModel = new List<PostViewModel>();
-            PostViewModel Temp;
-            foreach (var item in MylistOfPosts)
-            {
-                if (item.Isarchived == false)
-                {
-                    Temp = new PostViewModel();
-                    Temp.Content = item.content;
-                    Temp.createBy = item.creatby;
-                    Temp.CreatedDate = item.creatdate;
-                    Temp.Image = item.Image;
-                    Temp.Id = item.Id;
-                    MypostListViewModel.Add(Temp);
-                }
-            }
+            int myUserId =unitOfWork.UserManger.GetId();
+            List<Post> MylistOfPosts = unitOfWork.postManger.GetAll().Where(u => u.Users_Id == myUserId).ToList();
+            List<PostViewModel> MypostListViewModel = MylistOfPosts.Where(u => u.Isarchived == false)
+                .Select(u => new PostViewModel {
+                Id = u.Id,
+                Image = u.Image,
+                Isarchived = u.Isarchived,
+                Content = u.content, 
+                createBy = u.creatby,
+                CreatedDate = u.creatdate
+            }).ToList();
             return View(MypostListViewModel);
         }
 
         public ActionResult Delete(int Id)
         {
-            Post MyPost = postManger.GetAllBind().FirstOrDefault(u => u.Id == Id);
+            Post MyPost = unitOfWork.postManger.GetAllBind().FirstOrDefault(u => u.Id == Id);
+
             PostViewModel Model = new PostViewModel {
                 Content = MyPost.content, 
                 createBy = MyPost.creatby, 
@@ -182,22 +170,12 @@ namespace Aphrie.Project.UI.Controllers
         [HttpPost]
         public ActionResult Delete(PostViewModel Model)
         {
-            Post MyPost = postManger.GetAllBind().FirstOrDefault(u => u.Id == Model.Id);
+            Post MyPost = unitOfWork.postManger.GetAllBind().FirstOrDefault(u => u.Id == Model.Id);
             MyPost.Isarchived = true;
-            postManger.Save();
+            unitOfWork.Save();
             return RedirectToAction("PersonalPage", "Account");
         }
 
-        //public ActionResult follow()
-        //{
-
-        //    return View();
-        //}
-
-        #region Help
-       
-        
-        #endregion
 
     }
 }

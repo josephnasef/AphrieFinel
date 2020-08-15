@@ -1,4 +1,5 @@
 ﻿using Aphrie.Project.Bll.Concert;
+using Aphrie.Project.DAL.SQLServer.Context;
 using Aphrie.Project.DAL.SQLServer.model;
 using System;
 using System.Collections.Generic;
@@ -8,8 +9,14 @@ using System.Threading.Tasks;
 
 namespace Aphrie.project.BLL.Mangers
 {
-    public class postManger:Repository<Post>
+    public class postManger : Repository<Post>
     {
+      
 
+        public postManger(AphrieContext aphrieContext):
+            base(aphrieContext)
+        {
+           
+        }
     }
 }

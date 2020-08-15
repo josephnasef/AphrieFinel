@@ -1,4 +1,5 @@
-﻿using Aphrie.project.BLL.Mangers;
+﻿using Aphrie.project.BLL.Concert;
+using Aphrie.project.BLL.Mangers;
 using Aphrie.Project.DAL.SQLServer.model;
 using Aphrie.Project.UI.Models;
 using System;
@@ -12,31 +13,31 @@ namespace Aphrie.Project.UI.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        private readonly UserManger userManger;
-        private readonly AddFriendManger addFriendManger;
+       
+        private readonly UnitOfWork unitOfWork;
 
 
-        public HomeController(UserManger _userManger, AddFriendManger _addFriendManger)
+        public HomeController( UnitOfWork _unitOfWork)
         {
-            this.userManger = _userManger;
-            this.addFriendManger = _addFriendManger;
+           
+            this.unitOfWork = _unitOfWork;
         }
 
         public ActionResult Index()
         {
-            int Id = userManger.GetAllBind().SingleOrDefault(u => u.Username == HttpContext.User.Identity.Name).Id;
-            List<AddFriend> list = addFriendManger.GetAll().Where(u => u.SenderId == Id).ToList();
-            List<int> Mylist= new List<int>(); ;
-            
+            int Id = unitOfWork.UserManger.GetAllBind().SingleOrDefault(u => u.Username == HttpContext.User.Identity.Name).Id;
+            List<AddFriend> list = unitOfWork.AddFriendManger.GetAll().Where(u => u.SenderId == Id).ToList();
+            List<int> Mylist = new List<int>(); ;
+
             foreach (var item in list)
             {
                 //Mylist = new List<int>();
-                Mylist.Add(userManger.GetAllBind().SingleOrDefault(u => u.Id == item.ReceiverId).Id);
+                Mylist.Add(unitOfWork.UserManger.GetAllBind().SingleOrDefault(u => u.Id == item.ReceiverId).Id);
 
-               
+
             };
-           
-            var myuserslist = userManger.GetAll().ToList();
+
+            var myuserslist = unitOfWork.UserManger.GetAll().ToList();
             var mylistOfAccounts = new List<Account>();
             Account acc;
             foreach (var item in myuserslist)
@@ -57,9 +58,9 @@ namespace Aphrie.Project.UI.Controllers
         public ActionResult SendFriendReq(int id)
         {
             
-            AddFriend friend = new AddFriend {SenderId = userManger.GetId(), ReceiverId= id , Status=false};
-            Users user = userManger.GetBy(friend.ReceiverId);
-            addFriendManger.Add(friend);
+            AddFriend friend = new AddFriend {SenderId = unitOfWork.UserManger.GetId(), ReceiverId= id , Status=false};
+            Users user = unitOfWork.UserManger.GetBy(friend.ReceiverId);
+            unitOfWork.AddFriendManger.Add(friend);
 
             ViewBag.Message = "Your application description page.";
             TempData["message"] = string.Format("{0} was added", user.Username);
@@ -69,24 +70,14 @@ namespace Aphrie.Project.UI.Controllers
         public ActionResult RemoveFriendReq(int id)
         {
 
-            AddFriend friend2 = addFriendManger.GetBy( userManger.GetId(), id); 
-            addFriendManger.Delete(friend2);
-            Users user = userManger.GetBy(id);
+            AddFriend friend2 = unitOfWork.AddFriendManger.GetBy(unitOfWork.UserManger.GetId(), id);
+            unitOfWork.AddFriendManger.Delete(friend2);
+            Users user = unitOfWork.UserManger.GetBy(id);
             TempData["message"] = string.Format("{0} was deleted", user.Username);
 
             ViewBag.Message = "Your application description page.";
 
             return RedirectToAction("Index");
         }
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-        //public ActionResult Cheack()
-        //{
-
-        //}
     }
 }

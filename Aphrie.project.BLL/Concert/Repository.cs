@@ -13,9 +13,12 @@ namespace Aphrie.Project.Bll.Concert
     {
         private AphrieContext Context;
         private DbSet<TEntity> _set;
-        public Repository()
+
+   
+
+        public Repository(AphrieContext aphrieContext)
         {
-            Context = new AphrieContext();
+            Context = aphrieContext;
             _set = Context.Set<TEntity>();
         }
 

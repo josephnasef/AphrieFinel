@@ -46,6 +46,7 @@
     <Compile Include="Abstract\IRepository.cs" />
     <Compile Include="Concert\Authentication.cs" />
     <Compile Include="Concert\Repository.cs" />
+    <Compile Include="Concert\UnitOfWork.cs" />
     <Compile Include="Mangers\AddFriendManger.cs" />
     <Compile Include="Mangers\postManger.cs" />
     <Compile Include="Mangers\UserManger.cs" />

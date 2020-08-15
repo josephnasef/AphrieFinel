@@ -1,4 +1,4 @@
-﻿using Aphrie.Project.BLL.Mangers;
+﻿using Aphrie.project.BLL.Concert;
 using Aphrie.Project.DAL.SQLServer.model;
 using System;
 using System.Collections.Generic;
@@ -12,9 +12,10 @@ namespace test
     {
         static void Main(string[] args)
         {
-            LoginManger loginManger = new LoginManger();
-            Login my = new Login { Password = "123", Username = "koo" };
-            loginManger.Add(my);
+            UnitOfWork unitOfWork = new UnitOfWork();
+            
+                Users users = new Users {Username="jojo",Password="1234",Phone="015" } ;
+            unitOfWork.UserManger.Add(users);
             Console.ReadKey();
         }
     }
