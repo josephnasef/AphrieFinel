@@ -2,8 +2,12 @@
 
 @{
     ViewBag.Title = "Posts";
-  
+
 }
+<h3>
+    <strong>Posts of your Follwing</strong>
+</h3>
+<hr />
 
 @foreach (var item in Model)
 {
@@ -21,9 +25,9 @@
                 <img src=@item.Image style="width:200px;height:200px" />
             </a>
 
-            <p>
-                @Html.Raw(item.Content)
-                <a href="#">...</a>
+            <p id="text" style="color: black !important; font-size: 20px !important;">
+                @{var text = @Html.Raw(item.Content);}
+                @text
             </p>
             <div class="clear"> </div>
         </div>
@@ -32,7 +36,7 @@
                 <li><a href="#"><img src="/images/views.png" title="view" /></a></li>
                 <li><a href="#"><img src="/images/likes.png" title="likes" /></a></li>
                 <li><a href="#"><img src="/images/link.png" title="link" /></a></li>
-                <li><a class="readmore" href="singlepage.html">ReadMore</a></li>
+                <li><a class="readmore" href="#">ReadMore</a></li>
             </ul>
         </div>
     </div>

@@ -244,6 +244,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\js-Adminpage.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\tinymce\jquery.tinymce.js" />
     <Content Include="Scripts\tinymce\langs\en.js" />
@@ -509,11 +510,9 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\_LayoutAdminPage.cshtml" />
     <Content Include="Views\_LayoutLoginPage.cshtml" />
     <Content Include="Views\_LayoutRegisterPage.cshtml" />
     <Content Include="Views\Account\CreatPost.cshtml" />
@@ -521,7 +520,6 @@
     <Content Include="Views\Shared\PostSummary.cshtml" />
     <Content Include="Views\Error.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\tinymce_jquery_full.cshtml" />
-    <Content Include="Views\_LayoutHomePage.cshtml" />
     <Content Include="Views\Account\PersonalPage.cshtml" />
     <Content Include="Views\Account\Delete.cshtml" />
     <Content Include="Views\_LayoutPostPage.cshtml" />

@@ -108,7 +108,7 @@ body{
 	float:right;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 0.8em;
-	color: rgb(155, 155, 155);
+/*	color: rgb(155, 155, 155);*/
 	line-height: 1.8em;
 	width: 58.3%;
 }
@@ -273,7 +273,7 @@ body{
 	width:58%;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 0.8em;
-	color: rgb(155, 155, 155);
+/*	color: rgb(155, 155, 155);*/
 	line-height: 1.5em;
 }
 .post-grid p a{

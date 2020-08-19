@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Make new Post";
     }
-
+    <div class="hidden">   </div>
 @using (Html.BeginForm("CreatPost", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()

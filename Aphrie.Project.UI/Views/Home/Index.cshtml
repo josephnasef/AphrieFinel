@@ -1,12 +1,10 @@
 ﻿@model IEnumerable<Aphrie.Project.UI.Models.Account>
 
 @{
-    ViewBag.Title = "Home Page";
-}
-@{
     ViewBag.Title = "Home";
 
 }
+
 <link href="~/Content/styleforbuttonfollow.css" rel="stylesheet" />
 <h3>
     <strong> People to follow </strong>
@@ -16,39 +14,23 @@
     <div class="right-content">
         @foreach (var item in Model)
         {
+            var id = item.IsFollow ? " Unfollow " : " follow ";
+            var hart = item.IsFollow ? "fa-heart" : "fa-heart-o";
+
             <div class="content-grids">
                 <div class="content-grid">
-                    <a href="singlepage.html">
-                        @*<img src="images/gridallbum1.png" title="allbum-name" />*@
-                        <img src="~/images/figer.jpg" style="width:300px;height:300px" />
-                    </a>
                     <h3>@item.Name</h3>
-
+                    <img src="~/images/figer.jpg" style="width:300px;height:300px" />
                     <div class="comments">
                         <ul>
-                            <li><a href="#"><img src="/images/views.png" title="view" /></a></li>
-                            <li><a href="#"><img src="/images/link.png" title="link" /></a></li>
-
-                            @{
-
-                                var id = item.IsFollow;
-                            }
-                            @if (id)
-                            {
-                                <li><button id="we" data-Id=@item.Id class="btn btn-danger fa fa-heart toggle show">
-    @*<i class="fa fa-heart" aria-hidden="true">follow</i>*@ Unfollow
-
-</button></li>
-
-                            }
-                            else
-                            {
-                                <li>
-                                    <button id="we" data-Id=@item.Id class="btn btn-danger fa fa-heart-o toggle show"> follow </button>
-                                </li>
-                            }
+                            @*<li><a href="#"><img src="/images/views.png"class="hidden" title="view" /></a></li>
+                            <li><a href="#"><img src="/images/link.png" title="link" class="hidden"/></a></li>*@
+                            <li>
+                                <button id="we" data-Id=@item.Id class="btn btn-danger fa @hart toggle show">@id</button>
+                            </li>
                         </ul>
                     </div>
+                    <br />
                     <hr />
                 </div>
             </div>
