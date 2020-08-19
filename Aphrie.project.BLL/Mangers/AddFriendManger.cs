@@ -17,5 +17,19 @@ namespace Aphrie.project.BLL.Mangers
         {
             
         }
+        public bool cheackfrienreq(int Rec, int sen)
+        {
+            bool Result = true;
+            var find = GetAll().SingleOrDefault(u => u.ReceiverId == Rec && u.SenderId == sen);
+            if (find == null)
+            {
+                return Result = false;
+            }
+            else
+            {
+                return Result;
+            }
+
+        }
     }
 }

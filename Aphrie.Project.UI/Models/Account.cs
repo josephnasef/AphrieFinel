@@ -10,6 +10,6 @@ namespace Aphrie.Project.UI.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Password { get; set; }
-        public bool AddOrRemove { get; set; }
+        public bool IsFollow { get; set; }
     }
 }

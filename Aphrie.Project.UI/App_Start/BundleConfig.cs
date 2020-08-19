@@ -35,6 +35,7 @@ namespace Aphrie.Project.UI
                      "~/Content/bootstrap-theme.css",
                      "~/Content/ErrorStyles.css"
                      ));
+            bundles.Add(new ScriptBundle("~/bundles/follow").Include("~/Scripts/Follow.js"));
         }
     }
 }
