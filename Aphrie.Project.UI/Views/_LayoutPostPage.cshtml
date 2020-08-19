@@ -1,5 +1,4 @@
 ﻿<!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -27,11 +26,7 @@
                 </div>
                 <div class="top-nav">
                     <ul>
-                        <li>
-                            @*<a href="index.html">Home</a>*@
-                            @Html.ActionLink("Home", "Index", "Home")
-                        </li>
-                        <li><a href="#">About</a></li>
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
                         <li>@Html.ActionLink("All Posts ", "PostList", "Account")</li>
                         <li>@Html.ActionLink("My Page", "PersonalPage", "Account")</li>
                         <li>@Html.ActionLink("Make new Post ", "CreatPost", "Account")</li>
@@ -107,3 +102,20 @@
 </body>
 </html>
 @Scripts.Render("~/bundles/bootstrap")
+
+@*<script>
+    $(".HomeJs").click(function (e) {
+        e.preventDefault();
+        var ele = $(this);
+        $.ajax({
+            type: "GET",
+            contentType: "application/json",
+            url: "/Home/Index",
+            success: function (date) {
+                alert(date);
+                //alert("i am in ");
+            }
+
+        })
+    })
+</script>*@

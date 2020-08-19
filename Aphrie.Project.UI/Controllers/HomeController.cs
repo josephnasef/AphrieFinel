@@ -35,28 +35,11 @@ namespace Aphrie.Project.UI.Controllers
 
                     foreach (var item in list)
                     {
-                        //Mylist = new List<int>();
                         Mylist.Add(unitOfWork.UserManger.GetAllBind().SingleOrDefault(u => u.Id == item.ReceiverId).Id);
-
-
                     };
 
-                    var myuserslist = unitOfWork.UserManger.GetAll().ToList();
-                    var mylistOfAccounts = new List<Account>();
-                    Account acc;
-                    foreach (var item in myuserslist)
-                    {
-                        acc = new Account();
-                        acc.Name = item.Username;
-                        acc.Password = item.Password;
-                        acc.Id = item.Id;
-                        mylistOfAccounts.Add(acc);
-                        if (Mylist.Contains(item.Id))
-                        {
-                            acc.IsFollow = true;
-                        }
-                    }
-                    return View(mylistOfAccounts);
+                    var myuserslist = unitOfWork.UserManger.GetAll().ToList().Where(u=>u.Id!=unitOfWork.UserManger.GetId()).Select(u=> new Account {IsFollow= Mylist.Contains(u.Id)?true:false,Id=u.Id,Name=u.Username,Password=u.Password});
+                    return View(myuserslist);
 
                 }
                 else
