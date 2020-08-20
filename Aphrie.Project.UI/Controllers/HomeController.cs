@@ -38,19 +38,21 @@ namespace Aphrie.Project.UI.Controllers
                         Mylist.Add(unitOfWork.UserManger.GetAllBind().SingleOrDefault(u => u.Id == item.ReceiverId).Id);
                     };
 
-                    var myuserslist = unitOfWork.UserManger.GetAll().ToList().Where(u=>u.Id!=unitOfWork.UserManger.GetId()).Select(u=> new Account {IsFollow= Mylist.Contains(u.Id)?true:false,Id=u.Id,Name=u.Username,Password=u.Password});
+                    var myuserslist = unitOfWork.UserManger.GetAll().ToList().Where(u=>u.Id!=unitOfWork.UserManger.GetId()).Select(u=> new Account {IsFollow= Mylist.Contains(u.Id)?true:false,Id=u.Id,Name=u.Username,Password=u.Password}).OrderBy(u=>u.Name);
                     return View(myuserslist);
 
                 }
                 else
                 {
                     return View("Error");
+                    ViewBag.ErrorMessage = "Enter valid username  or passwor";
                 }
             }
             catch (Exception)
             {
-
-                throw new System.InvalidOperationException("error in page ");
+                ViewBag.ErrorMessage = "Enter valid username  or passwor";
+                return View("Error");
+                //throw new System.InvalidOperationException("error in page ");
             }
            
             

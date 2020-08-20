@@ -20,6 +20,7 @@ namespace Aphrie.Project.DAL.SQLServer.model
         public string content { get; set; }
         public string creatby { get; set; }
         public DateTime creatdate { get; set; }
+
         public string Image { get; set; }
         public bool Isarchived { get; set; }
 

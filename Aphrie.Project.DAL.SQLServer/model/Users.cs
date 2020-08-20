@@ -29,6 +29,7 @@ namespace Aphrie.Project.DAL.SQLServer.model
         public string Password { get; set; }
 
         public string Phone { get; set; }
+        public string Image { get; set; }
 
         public Users(HashSet<Post> posts/*, HashSet<UsersUsers> followers, HashSet<UsersUsers> person*/)
         {

@@ -24,7 +24,7 @@ namespace Aphrie.Project.UI.Controllers
             this.authentication = _authentication;
             this.unitOfWork = _unitOfWork;
 
-           
+
         }
         // GET: Account
         [AllowAnonymous]
@@ -38,18 +38,28 @@ namespace Aphrie.Project.UI.Controllers
         [AllowAnonymous]
         public ActionResult Login(Account account)
         {
-            if (ModelState.IsValid)
+            try
             {
-                if (authentication.CheackLogin(account.Name, account.Password))
+                if (ModelState.IsValid)
                 {
-                    FormsAuthentication.SetAuthCookie(account.Name, false);
-                    return RedirectToAction("Index", "Home");
+                    if (authentication.CheackLogin(account.Name, account.Password))
+                    {
+                        FormsAuthentication.SetAuthCookie(account.Name, false);
+                        return RedirectToAction("Index", "Home");
+                    }
+                    ModelState.AddModelError("", "Username  or password  is  error ");
+                    return View();
+
                 }
-                ModelState.AddModelError("", "Username  or password  is  error ");
                 return View();
-               
             }
-            return View();
+            catch (Exception)
+            {
+
+                throw new System.InvalidOperationException("enter valid user name  or  Password !! reload page");
+
+            }
+
         }
         public ActionResult Logout()
         {
@@ -65,15 +75,22 @@ namespace Aphrie.Project.UI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(RegesterViewModel regesterView)
+        public ActionResult Register(RegesterViewModel regesterView, HttpPostedFileBase ImageFile)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
+                    if (ImageFile != null && ImageFile.ContentLength > 0)
+                    {
+                        string FileName = Path.GetFileName(ImageFile.FileName);
+                        string ImagePath = Path.Combine(Server.MapPath("~/images/"), FileName);
+                        ImageFile.SaveAs(ImagePath);
+                    }
 
                     Users user = new Users()
                     {
+                        Image = "/images/" + ImageFile.FileName,
                         Password = regesterView.Password,
                         Username = regesterView.Username,
                         Phone = regesterView.Phone
@@ -91,7 +108,7 @@ namespace Aphrie.Project.UI.Controllers
 
                 throw new System.InvalidOperationException("Error !! reload page");
             }
-           
+
         }
 
         [HttpGet]
@@ -117,8 +134,9 @@ namespace Aphrie.Project.UI.Controllers
                     }
                     Post MyPost = new Post
                     {
-                        Image = "/images/" + ImageFile.FileName,                        
-                        content = model.Content,                        
+                        
+                        Image =ImageFile!=null?( "/images/" + ImageFile.FileName):null,
+                        content = model.Content,
                         creatby = HttpContext.User.Identity.Name,
                         creatdate = DateTime.Now,
                         Users_Id = unitOfWork.UserManger.GetId()
@@ -137,7 +155,7 @@ namespace Aphrie.Project.UI.Controllers
             {
 
                 throw new System.InvalidOperationException("Error !! reload page");
-            }   
+            }
         }
 
         [Authorize]
@@ -159,8 +177,9 @@ namespace Aphrie.Project.UI.Controllers
                     createBy = u.creatby,
                     CreatedDate = u.creatdate,
                     Image = u.Image,
-                    Isarchived = u.Isarchived
-                }).ToList();
+                    Isarchived = u.Isarchived,
+                    CreaterImage=unitOfWork.UserManger.GetAllBind().SingleOrDefault(uu=>uu.Username==u.creatby).Image,
+                }).OrderBy(u => u.createBy).ToList();
                 return View(MyPostViewModel);
             }
             else
@@ -250,7 +269,7 @@ namespace Aphrie.Project.UI.Controllers
                 }
                 else
                 {
-                throw new System.InvalidOperationException("Error !! reload page");
+                    throw new System.InvalidOperationException("Error !! reload page");
                 }
 
             }

@@ -218,6 +218,10 @@
     <Compile Include="Migrations\202008102250014_j15.designer.cs">
       <DependentUpon>202008102250014_j15.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202008192248283_Profileimage.cs" />
+    <Compile Include="Migrations\202008192248283_Profileimage.designer.cs">
+      <DependentUpon>202008192248283_Profileimage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="model\Post.cs" />
     <Compile Include="model\Users.cs" />
@@ -364,6 +368,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202008102250014_j15.resx">
       <DependentUpon>202008102250014_j15.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008192248283_Profileimage.resx">
+      <DependentUpon>202008192248283_Profileimage.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -16,6 +16,7 @@ namespace Aphrie.Project.UI.Models
         [UIHint("tinymce_jquery_full"), AllowHtml]
         public string Content { get; set; }
         public string Image { get; set; }
+        public string CreaterImage { get; set; }
         public bool Isarchived { get; set; }
 
 
